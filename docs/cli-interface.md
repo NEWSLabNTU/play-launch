@@ -161,7 +161,7 @@ Both `dump_launch` and `play_launch` must be available in PATH:
 
 ```bash
 # Build the workspace
-cd /path/to/play-launch
+cd /path/to/play_launch
 make build
 
 # Source the workspace

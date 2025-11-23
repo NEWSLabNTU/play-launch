@@ -1,10 +1,10 @@
 #!/bin/bash
 set -e
 
-IO_HELPER="/usr/lib/play-launch/play_launch_io_helper"
+IO_HELPER="/usr/lib/play_launch/play_launch_io_helper"
 
 if [ "$1" = "configure" ]; then
-    echo "Setting up play-launch..."
+    echo "Setting up play_launch..."
 
     # Set capability on I/O helper for container monitoring
     if [ -f "${IO_HELPER}" ]; then
@@ -20,7 +20,7 @@ if [ "$1" = "configure" ]; then
         fi
     fi
 
-    echo "play-launch installed successfully!"
+    echo "play_launch installed successfully!"
     echo ""
     echo "Usage:"
     echo "  source /opt/ros/humble/setup.bash"
@@ -28,7 +28,7 @@ if [ "$1" = "configure" ]; then
     echo "  play_launch launch <package> <launch_file>"
     echo "  play_launch plot"
     echo ""
-    echo "Documentation: /usr/share/doc/play-launch/"
+    echo "Documentation: /usr/share/doc/play_launch/"
 fi
 
 exit 0

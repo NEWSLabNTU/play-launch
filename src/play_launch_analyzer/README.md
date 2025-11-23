@@ -11,8 +11,8 @@ This package provides tools to analyze and visualize resource usage metrics coll
 Build the workspace:
 
 ```bash
-cd /path/to/play-launch
-make build
+cd /path/to/play_launch
+just build
 source install/setup.bash
 ```
 

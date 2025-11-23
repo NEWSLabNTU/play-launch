@@ -18,17 +18,17 @@ A comprehensive toolkit for recording, replaying, and analyzing ROS 2 launch exe
 
 ### Install from Debian Package (Recommended)
 
-The easiest way to install play-launch is using the pre-built Debian package.
+The easiest way to install play_launch is using the pre-built Debian package.
 
 **Prerequisites:**
 - Ubuntu 22.04 (Jammy) with ROS 2 Humble
 
 **Installation Steps:**
 
-1. Download the latest `.deb` package from the [Releases page](https://github.com/NEWSLabNTU/play-launch/releases):
+1. Download the latest `.deb` package from the [Releases page](https://github.com/NEWSLabNTU/play_launch/releases):
 
 ```bash
-wget https://github.com/NEWSLabNTU/play-launch/releases/download/v0.2.0/play-launch_0.2.0_amd64.deb
+wget https://github.com/NEWSLabNTU/play_launch/releases/download/v0.2.0/play-launch_0.2.0_amd64.deb
 ```
 
 2. Install the package:
@@ -69,8 +69,8 @@ pip3 install pandas plotly
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/NEWSLabNTU/play-launch.git
-cd play-launch
+git clone https://github.com/NEWSLabNTU/play_launch.git
+cd play_launch
 ```
 
 2. Install all dependencies:

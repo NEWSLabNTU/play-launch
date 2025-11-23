@@ -205,7 +205,7 @@ Overall CPU%, memory, network rates, disk I/O rates, GPU stats (Jetson via jtop 
 
 **"I/O helper unavailable" warning**:
 1. Check binary exists: `ls install/play_launch/lib/play_launch/play_launch_io_helper`
-2. If missing: `just build-play-launch`
+2. If missing: `just build`
 3. Set capability: `just setcap-io-helper`
 4. Verify: `just verify-io-helper`
 
@@ -269,21 +269,22 @@ Autoware planning simulator integration test in `test/autoware_planning_simulati
 Build Debian package for Ubuntu 22.04:
 
 ```bash
-just build-deb  # Creates play-launch_0.2.0-2_amd64.deb
+just build-deb  # Creates play-launch_0.2.0-3_amd64.deb
 ```
 
 **Package details:**
+- **Naming convention**: Package name uses `play-launch` (Debian requirement), installed files use `play_launch` (source code consistency)
 - Built with standard Debian tools (`dpkg-buildpackage`)
 - Uses single-stage `colcon build` with colcon-cargo-ros2
 - Uses `debian/` directory for metadata (control, changelog, rules, postinst)
 - Installs to dual locations for FHS compliance and ROS2 integration:
   - `/usr/bin/play_launch`, `dump_launch` - main executables (in PATH)
-  - `/usr/lib/play-launch/play_launch_io_helper` - I/O monitoring helper
+  - `/usr/lib/play_launch/play_launch_io_helper` - I/O monitoring helper
   - `/opt/ros/humble/*` - Full ROS2 package structure with symlinks to /usr binaries
-  - `/usr/share/doc/play-launch/` - Documentation (README.md, CLAUDE.md)
-  - `/usr/share/play-launch/examples/` - Test cases
+  - `/usr/share/doc/play_launch/` - Documentation (README.md, CLAUDE.md)
+  - `/usr/share/play_launch/examples/` - Test cases
 - Postinst script automatically sets CAP_SYS_PTRACE on I/O helper
-- Size: 2.0 MB compressed (5.4 MB play_launch + 1.7 MB play_launch_io_helper + Python packages)
+- Size: ~2.0 MB compressed (5.4 MB play_launch + 1.7 MB play_launch_io_helper + Python packages)
 
 **Build process:**
 - `override_dh_auto_configure`: Install Rust (if needed), colcon-cargo-ros2, Python dependencies

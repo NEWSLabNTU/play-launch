@@ -15,7 +15,7 @@ A self-contained Rust daemon (`play_launch_io_helper`) that reads `/proc/[pid]/i
 ### 1. Workspace Structure
 
 ```
-play-launch/
+play_launch/
 ├── Cargo.toml                          # Workspace root
 ├── src/
 │   ├── play_launch/                    # Main binary (existing)

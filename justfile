@@ -102,7 +102,7 @@ clean:
 
 # Build Debian package using standard Debian tools
 build-deb:
-    dpkg-buildpackage -us -uc -b -d
+    cd debian && just build
 
 # Run all tests
 test:

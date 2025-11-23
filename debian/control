@@ -16,7 +16,7 @@ Build-Depends: debhelper (>= 10),
                ros-humble-ament-index-python,
                ros-humble-launch
 Standards-Version: 4.5.0
-Homepage: https://github.com/NEWSLabNTU/play-launch
+Homepage: https://github.com/NEWSLabNTU/play_launch
 
 Package: play-launch
 Architecture: any

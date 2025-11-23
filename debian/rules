@@ -58,27 +58,27 @@ override_dh_auto_install:
 			debian/play-launch/opt/ros/humble/play_launch_analyzer/lib/play_launch_analyzer/play_launch_analyzer; \
 	fi
 
-	# Move I/O helper to /usr/lib/play-launch
-	mkdir -p debian/play-launch/usr/lib/play-launch
+	# Move I/O helper to /usr/lib/play_launch
+	mkdir -p debian/play-launch/usr/lib/play_launch
 	if [ -f debian/play-launch/opt/ros/humble/play_launch/lib/play_launch/play_launch_io_helper ]; then \
 		mv debian/play-launch/opt/ros/humble/play_launch/lib/play_launch/play_launch_io_helper \
-			debian/play-launch/usr/lib/play-launch/play_launch_io_helper; \
-		ln -sf /usr/lib/play-launch/play_launch_io_helper \
+			debian/play-launch/usr/lib/play_launch/play_launch_io_helper; \
+		ln -sf /usr/lib/play_launch/play_launch_io_helper \
 			debian/play-launch/opt/ros/humble/play_launch/lib/play_launch/play_launch_io_helper; \
 	fi
 
 	# Install documentation
-	mkdir -p debian/play-launch/usr/share/doc/play-launch
-	install -Dm644 README.md debian/play-launch/usr/share/doc/play-launch/README.md
-	install -Dm644 CLAUDE.md debian/play-launch/usr/share/doc/play-launch/CLAUDE.md
+	mkdir -p debian/play-launch/usr/share/doc/play_launch
+	install -Dm644 README.md debian/play-launch/usr/share/doc/play_launch/README.md
+	install -Dm644 CLAUDE.md debian/play-launch/usr/share/doc/play_launch/CLAUDE.md
 	if [ -d docs ]; then \
-		cp -r docs/* debian/play-launch/usr/share/doc/play-launch/ 2>/dev/null || true; \
+		cp -r docs/* debian/play-launch/usr/share/doc/play_launch/ 2>/dev/null || true; \
 	fi
 
 	# Install examples
 	if [ -d test ]; then \
-		mkdir -p debian/play-launch/usr/share/play-launch/examples; \
-		cp -r test/* debian/play-launch/usr/share/play-launch/examples/; \
+		mkdir -p debian/play-launch/usr/share/play_launch/examples; \
+		cp -r test/* debian/play-launch/usr/share/play_launch/examples/; \
 	fi
 
 override_dh_auto_clean:

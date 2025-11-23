@@ -1,3 +1,11 @@
+play-launch (0.2.0-3) unstable; urgency=medium
+
+  * Use hybrid naming: package name play-launch, installed files play_launch
+  * Created debian/justfile for package management
+  * Installed binaries use underscores for consistency with source code
+
+ -- Jerry Lin <jerry73204@gmail.com>  Sat, 23 Nov 2025 15:00:00 +0000
+
 play-launch (0.2.0-2) unstable; urgency=medium
 
   * Build system migration to colcon-cargo-ros2
