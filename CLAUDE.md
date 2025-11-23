@@ -269,28 +269,30 @@ Autoware planning simulator integration test in `test/autoware_planning_simulati
 Build Debian package for Ubuntu 22.04:
 
 ```bash
-just build-deb  # Creates play-launch_0.1.0-1_arm64.deb
+just build-deb  # Creates play-launch_0.2.0-2_amd64.deb
 ```
 
 **Package details:**
-- Built with `scripts/build-deb.sh`
-- Uses `debian/` directory for metadata (control, changelog, rules)
-- Installs to standard FHS paths:
-  - `/usr/bin/play_launch` - main binary
-  - `/usr/lib/play-launch/` - helper binaries and bundled libraries
-  - `/usr/lib/python3.10/dist-packages/` - Python packages
-  - `/usr/share/doc/play-launch/` - documentation
-  - `/usr/share/play-launch/examples/` - test cases
+- Built with standard Debian tools (`dpkg-buildpackage`)
+- Uses single-stage `colcon build` with colcon-cargo-ros2
+- Uses `debian/` directory for metadata (control, changelog, rules, postinst)
+- Installs to dual locations for FHS compliance and ROS2 integration:
+  - `/usr/bin/play_launch`, `dump_launch` - main executables (in PATH)
+  - `/usr/lib/play-launch/play_launch_io_helper` - I/O monitoring helper
+  - `/opt/ros/humble/*` - Full ROS2 package structure with symlinks to /usr binaries
+  - `/usr/share/doc/play-launch/` - Documentation (README.md, CLAUDE.md)
+  - `/usr/share/play-launch/examples/` - Test cases
 - Postinst script automatically sets CAP_SYS_PTRACE on I/O helper
-- Size: 2.2 MB compressed (8.7 MB binaries + Python packages)
+- Size: 2.0 MB compressed (5.4 MB play_launch + 1.7 MB play_launch_io_helper + Python packages)
 
-**Known issue:** Binary currently has hardcoded RPATHs pointing to build directory. Need to either:
-1. Configure Cargo to set RPATH to `/usr/lib/play-launch/lib:/opt/ros/humble/lib` via `.cargo/config.toml`, OR
-2. Bundle all interface libraries (composition_interfaces, rcl_interfaces, etc.) and patch RPATH post-build
+**Build process:**
+- `override_dh_auto_configure`: Install Rust (if needed), colcon-cargo-ros2, Python dependencies
+- `override_dh_auto_build`: Single `colcon build` command (no --symlink-install for proper packaging)
+- `override_dh_auto_install`: Copy install/* to /opt/ros/humble, move binaries to /usr, create symlinks
 
 **Binary optimization** (completed 2025-11-03):
 - Release profile with `strip = true` and `lto = "thin"`
-- 94% size reduction: 137MB → 8.7MB
+- 94% size reduction: 137MB → 8.7MB (before packaging)
 - See `Cargo.toml` [profile.release] section
 
 ### Build System
@@ -311,8 +313,8 @@ just build-deb  # Creates play-launch_0.1.0-1_arm64.deb
 
 ## Key Recent Fixes
 
-- **2025-11-23**: Build system refactoring - Migrated to colcon-cargo-ros2 (single-stage build). Removed boilerplate packages from src/ros2_rust and src/interface. Enhanced justfile with install-deps recipe (interactive conflict resolution), run recipe, and verify-io-helper. All recipes now properly source /opt/ros/humble/setup.bash.
-- **2025-11-04**: Build system migration - Replaced Makefile with justfile for cleaner syntax. Created Debian packaging with proper Ubuntu 22.04 paths. Extracted build-deb logic to `scripts/build-deb.sh`.
+- **2025-11-23**: Build system refactoring - Migrated to colcon-cargo-ros2 (single-stage build). Removed boilerplate packages from src/ros2_rust and src/interface. Simplified debian/rules to use single-stage colcon build (removed wheel-building complexity, fixed symlink issues). Enhanced justfile with install-deps recipe (interactive conflict resolution), run recipe, and verify-io-helper. All recipes now properly source /opt/ros/humble/setup.bash.
+- **2025-11-04**: Build system migration - Replaced Makefile with justfile for cleaner syntax. Created Debian packaging with proper Ubuntu 22.04 paths.
 - **2025-11-03**: Binary optimization - 94% size reduction (137MB → 8.7MB) via Cargo release profile with strip+LTO.
 - **2025-11-03**: Fixed Python dependency - Replaced ruamel.yaml with standard PyYAML (system package).
 - **2025-11-03**: Binary optimization - Added Cargo.toml release profile (strip=true, lto="thin") and Makefile --cargo-args --release flag. Reduced play_launch from 109MB to 6.5MB, play_launch_io_helper from 28MB to 2.2MB (94% total reduction).
